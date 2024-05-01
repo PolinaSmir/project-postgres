@@ -1,9 +1,12 @@
-CREATE TABLE users_with_email();
+DROP TABLE users;
 
-DROP TABLE test, users_with_email, users;
-
-CREATE TABLE users(
+CREATE TABLE  users(
   first_name varchar(64),
-  last_name varchar(64),
-  biography text
+  last_name VARCHAR(64),
+  biography text,
+  gender varchar(30),
+  is_subscribed boolean,
+  birthday date,
+  foot_size smallint,
+  height numeric(5, 2)
 );
