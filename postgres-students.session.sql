@@ -34,26 +34,30 @@ DROP CONSTRAINT "products_quantity_check";
 ALTER TABLE products
 DROP COLUMN quantity;
 
+
 CREATE TABLE books(
   id serial PRIMARY KEY,
-  author varchar(256) NOT NULL CHECK(author != ''),
-  name varchar(256) NOT NULL CHECK(name != ''),
-  year int NOT NULL CHECK(year > 0),
-  видавництво varchar(200),
-  cathegory varchar(64),
+  author varchar(256),
+  name varchar(300),
+  year varchar(4),
+  publisher varchar(256),
+  cathegory varchar(256),
   synopsis text,
   quantity int,
   status boolean
 );
 
-INSERT INTO books(author, name, year, видавництво, cathegory, quantity, status ) VALUES
-('Chechov', 'Sborka', 1823, 'Vydavnictvo', 'comedy', 1, true);
-
 ALTER TABLE books
-ADD CONSTRAINT "quantity_more_than_zero" CHECK (quantity > 0);
+ADD CONSTRAINT "quantity_more_zero" CHECK (quantity >=0);
 
 ALTER TABLE books
 ADD CONSTRAINT "author_name_unique" UNIQUE(author, name);
 
-INSERT INTO books(author, name, year, видавництво, cathegory, quantity, status ) VALUES
-('Chechov', 'Basnya', 1932, '', 'detctive', 2, true);
+INSERT INTO books(author, name, quantity) VALUES
+('Оноре де Бальзак', 'Гобсек', 200);
+
+INSERT INTO books(author, name, quantity) VALUES
+('Оскар Уайльд', 'Портрет Дориана Грея', 0);
+
+INSERT INTO books(author, name, quantity) VALUES
+('Оноре де Бальзак', 'Шагренева шкура', 1500);
