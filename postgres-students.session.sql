@@ -1,20 +1,22 @@
-DROP TABLE users;
-
 CREATE TABLE  users(
-  first_name varchar(64),
-  last_name VARCHAR(64),
-  biography text,
-  gender varchar(30),
-  is_subscribed boolean,
-  birthday date,
+  first_name varchar(64) NOT NULL CONSTRAINT first_name_not_empty CHECK (first_name != ''),
+  last_name VARCHAR(64) NOT NULL CONSTRAINT last_name_not_empty CHECK (last_name != ''),
+  email varchar(64) NOT NULL CONSTRAINT email_not_empty CHECK (email != '') UNIQUE,
+  gender varchar(30) NOT NULL CONSTRAINT gender_not_empty CHECK (gender != ''),
+  is_subscribed boolean NOT NULL,
+  birthday date CHECK (birthday <= current_date),
   foot_size smallint,
-  height numeric(5, 2)
+  height numeric(5, 2) CONSTRAINT too_high_user CHECK (height < 2.4)
 );
 
-INSERT INTO users VALUES('John', 'Doe', 'Tady je hodne textu', 'male', true, '2004-09-14', 43, 1.75);
+DROP TABLE users;
 
 INSERT INTO users VALUES
-('Susan', 'Doe', 'Tady je hodne textu o Susan', 'female', true, '1994-09-14', 40, 1.65),
-('Peter', 'Doe', 'Tady je hodne textu o Peteru', 'male', true, '1990-09-14', 46, 1.95);
+('Susan', 'Doe', 'brauni147@gmail.com', 'female', true, '1994-09-14', 40, 1.65),
+('Peter', 'Doe', 'fwerty1234@mail.ua', 'male', false, '1990-09-14', 46, 1.95);
 
-INSERT INTO users VALUES('Blake', 'Doe', 'Tady je hodne textu o Blaku', 'male', false, '2004-09-14', NULL, NULL);
+INSERT INTO users VALUES
+('Draco', 'Doe', 'brauni@gmail.com', 'male', true, NULL, NULL, 2.3);
+
+INSERT INTO users VALUES
+('Peter', 'Parker', 'brauni123456789@gmail.com', 'male', true, '2024-05-01', NULL, 2.3);
