@@ -5,7 +5,7 @@ CREATE TABLE  users(
   gender varchar(30) NOT NULL CONSTRAINT gender_not_empty CHECK (gender != ''),
   is_subscribed boolean NOT NULL,
   birthday date CHECK (birthday <= current_date),
-  foot_size smallint,
+  foot_size smallint CHECK (foot_size > 0),
   height numeric(5, 2) CONSTRAINT too_high_user CHECK (height < 2.4)
 );
 
@@ -19,4 +19,4 @@ INSERT INTO users VALUES
 ('Draco', 'Doe', 'brauni@gmail.com', 'male', true, NULL, NULL, 2.3);
 
 INSERT INTO users VALUES
-('Peter', 'Parker', 'brauni123456789@gmail.com', 'male', true, '2024-05-01', NULL, 2.3);
+('Peter', 'Parker', 'brauni123456789@gmail.com', 'male', true, '2024-05-01', 0, 2.3);
