@@ -1,63 +1,25 @@
-CREATE TABLE products(
+CREATE TABLE orders(
   id serial PRIMARY KEY,
-  brand varchar(200) NOT NULL CHECK (brand != ''),
-  model varchar(300) NOT NULL CHECK (model != ''),
-  description text,
-  cathegory varchar(200) NOT NULL CHECK (cathegory != ''),
-  price numeric(10, 2) NOT NULL CHECK (price > 0),
-  discounted_price numeric(10,2) CHECK (discounted_price <= price)
+  created_at timestamp NOT NULL DEFAULT current_timestamp,
+  customer_id int REFERENCES users(id)
 );
 
-DROP TABLE products;
+DROP TABLE orders;
 
-INSERT INTO products(brand, model, cathegory, price) VALUES
-('Samsung', 'S10', 'smartphones', 200),
-('IPhone', '15 Pro', 'smartphones', 1200),
-('LG', '1234trc', 'TV', 300),
-('Sony', '457', 'TV', 600);
+ALTER TABLE users
+ADD COLUMN id serial PRIMARY KEY;
 
-INSERT INTO products(brand, model, cathegory, price) VALUES
-('IPhone', '15 Pro', 'smartphones', 500);
-
-ALTER TABLE products
-ADD CONSTRAINT "unique_brand_model_pair" UNIQUE(brand, model);
-
-ALTER TABLE products
-ADD COLUMN quantity int;
-
-ALTER TABLE products
-ADD CONSTRAINT "products_quantity_check" CHECK(quantity >= 0);
-
-ALTER TABLE products
-DROP CONSTRAINT "products_quantity_check";
-
-ALTER TABLE products
-DROP COLUMN quantity;
-
-
-CREATE TABLE books(
-  id serial PRIMARY KEY,
-  author varchar(256),
-  name varchar(300),
-  year varchar(4),
-  publisher varchar(256),
-  cathegory varchar(256),
-  synopsis text,
+CREATE TABLE orders_to_products(
+  product_id int REFERENCES products(id),
+  order_id int REFERENCES orders(id),
   quantity int,
-  status boolean
+  PRIMARY KEY(order_id, product_id)
 );
 
-ALTER TABLE books
-ADD CONSTRAINT "quantity_more_zero" CHECK (quantity >=0);
+INSERT INTO orders (customer_id) VALUES
+(3);
 
-ALTER TABLE books
-ADD CONSTRAINT "author_name_unique" UNIQUE(author, name);
-
-INSERT INTO books(author, name, quantity) VALUES
-('Оноре де Бальзак', 'Гобсек', 200);
-
-INSERT INTO books(author, name, quantity) VALUES
-('Оскар Уайльд', 'Портрет Дориана Грея', 0);
-
-INSERT INTO books(author, name, quantity) VALUES
-('Оноре де Бальзак', 'Шагренева шкура', 1500);
+INSERT INTO orders_to_products (product_id, order_id, quantity) VALUES
+(2, 1, 1),
+(3, 1, 2),
+(4, 1, 1);
