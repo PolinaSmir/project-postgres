@@ -1,0 +1,23 @@
+{
+  "name": "project-postgres",
+  "version": "0.1.0",
+  "description": "",
+  "private": "true",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PolinaSmir/project-postgres.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PolinaSmir/project-postgres/issues"
+  },
+  "homepage": "https://github.com/PolinaSmir/project-postgres#readme",
+  "dependencies": {
+    "pg": "^8.11.5"
+  }
+}
