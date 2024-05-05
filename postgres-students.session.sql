@@ -23,3 +23,7 @@ INSERT INTO products (brand, model, price, cathegory) VALUES
 
 INSERT INTO products (brand, model, price, cathegory) VALUES
 ('IPhone','14 pro', 850, 'smartphones') RETURNING *;
+
+---
+
+DELETE FROM users WHERE id >= 10;

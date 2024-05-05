@@ -1,8 +1,5 @@
 module.exports.mapUsers = (usersArray) => {
   return usersArray
-    .map(
-      (currentUser) =>
-        `('${currentUser.firstName}', '${currentUser.lastName}', '${currentUser.email}', ${currentUser.isSubscribed}, '${currentUser.gender}')`
-    )
+    .map(({ name: { first, last }, email, gender }) => `('${first}', '${last}', '${email}', ${Boolean(Math.random() > 0.5)}, '${gender}')`)
     .join(",");
 };
