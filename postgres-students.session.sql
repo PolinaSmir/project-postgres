@@ -54,3 +54,8 @@ CREATE TABLE orders_to_products(
 
 ALTER TABLE users
 ADD COLUMN is_subscribed boolean NOT NULL;
+
+DELETE FROM users;
+
+INSERT INTO products (brand, model, price, quantity, category) VALUES
+      ('Nokia', 'model 0)', '8413', '1396', 'phones' RETURNING *;
