@@ -22,7 +22,7 @@ CREATE TABLE users(
   last_name varchar(64) NOT NULL CHECK(last_name != ''),
   email text NOT NULL CHECK(email != ''),
   gender varchar(30),
-  is_subscribe boolean NOT NULL,
+  is_subscribed boolean NOT NULL,
   birthday date CHECK(birthday <= current_date),
   foot_size smallint,
   height numeric(5,2) CHECK(height < 3.0)
@@ -52,3 +52,5 @@ CREATE TABLE orders_to_products(
   PRIMARY KEY(order_id, product_id)
 );
 
+ALTER TABLE users
+ADD COLUMN is_subscribed boolean NOT NULL;
