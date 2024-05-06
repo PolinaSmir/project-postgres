@@ -1,29 +1,53 @@
-CREATE TABLE products_version_2(
+DROP TABLE orders_to_products;
+
+DROP TABLE orders;
+
+DROP TABLE messages;
+
+DROP TABLE chats_to_users;
+
+DROP TABLE chats;
+
+DROP TABLE products;
+
+DROP TABLE products_version_2;
+
+DROP TABLE users;
+
+-----------------------------
+
+CREATE TABLE users(
   id serial PRIMARY KEY,
-  brand varchar(256) NOT NULL CHECK(brand != ''),
-  model varchar(256) NOT NULL CHECK(model != ''),
-  price numeric(8, 2) NOT NULL,
-  is_luxury boolean GENERATED ALWAYS AS (price > 800) STORED
+  first_name varchar(64) NOT NULL CHECK(first_name != ''),
+  last_name varchar(64) NOT NULL CHECK(last_name != ''),
+  email text NOT NULL CHECK(email != ''),
+  gender varchar(30),
+  is_subscribe boolean NOT NULL,
+  birthday date CHECK(birthday <= current_date),
+  foot_size smallint,
+  height numeric(5,2) CHECK(height < 3.0)
 );
 
-INSERT INTO products_version_2(brand, model, price) VALUES
-('IPhone', '15 Pro', 1300),
-('Samsung', 'S10', 400),
-('Xiaomi', 'Model 5', 200);
+CREATE TABLE products(
+  id serial PRIMARY KEY,
+  brand varchar(200) NOT NULL CHECK(brand != ''),
+  model varchar(300) NOT NULL CHECK(model != ''),
+  description text,
+  category varchar(200) NOT NULL CHECK(category != ''),
+  price numeric(10, 2) NOT NULL CHECK(price > 0),
+  discounted_price numeric(10, 2) CHECK(discounted_price < price),
+  quantity int CHECK(quantity >= 0)
+);
 
-ALTER TABLE products
-ADD COLUMN is_luxury boolean GENERATED ALWAYS AS (price > 800) STORED;
+CREATE TABLE orders(
+  id serial PRIMARY KEY,
+  created_at timestamp NOT NULL DEFAULT current_timestamp,
+  customer_id int REFERENCES users(id)
+);
 
----
-
-UPDATE products SET price=price*3 WHERE price < 600;
-
-INSERT INTO products (brand, model, price, cathegory) VALUES
-('Xiaomi','22222223', 1000, 'smartphones') RETURNING id;
-
-INSERT INTO products (brand, model, price, cathegory) VALUES
-('IPhone','14 pro', 850, 'smartphones') RETURNING *;
-
----
-
-DELETE FROM users WHERE id >= 10;
+CREATE TABLE orders_to_products(
+  order_id int REFERENCES orders(id),
+  product_id int REFERENCES products(id),
+  quantity int NOT NULL DEFAULT 1,
+  PRIMARY KEY(order_id, product_id)
+);
