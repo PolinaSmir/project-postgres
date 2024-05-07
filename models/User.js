@@ -10,7 +10,7 @@ class User {
 
   static async bulkCreate(usersArray) {
     return await this._client.query(
-      `INSERT INTO users (first_name, last_name, email, is_subscribed, gender) VALUES
+      `INSERT INTO ${this._tableName} (first_name, last_name, email, is_subscribed, gender) VALUES
       ${mapUsers(usersArray)};`
     );
   }
