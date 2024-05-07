@@ -5,15 +5,15 @@ const { generatePhones } = require("./utils");
 async function runRequest() {
   await client.connect();
 
-  // const usersArray = await getUsers();
-  // const response = await User.bulkCreate(usersArray);
+  const usersArray = await getUsers();
+  const response1 = await User.bulkCreate(usersArray);
 
-  // const phonesArray = generatePhones(400);
-  // const response = await Product.bulkCreate(phonesArray);
+  const phonesArray = generatePhones(400);
+  const response2 = await Product.bulkCreate(phonesArray);
 
-  const { rows: usersArray } = await User.findAll();
+  const { rows: usersArrayForOrders } = await User.findAll();
   const { rows: productsArray } = await Product.findAll();
-  const response = await Order.bulkCreate(usersArray, productsArray);
+  const response = await Order.bulkCreate(usersArrayForOrders, productsArray);
 
   console.log(response);
 
