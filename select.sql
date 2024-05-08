@@ -284,3 +284,46 @@ SELECT count(*), extract("years" FROM age(birthday)) AS "age_group" FROM users
 GROUP BY "age_group"
 ORDER BY "age_group";
 
+---------------------------------------------------------------------------
+-- Relation operations --
+
+CREATE TABLE A(
+  v char(3),
+  t int
+);
+
+CREATE TABLE B(
+  v char(3)
+);
+
+INSERT INTO A VALUES
+('XXX', 1),
+('XXY', 1),
+('XXZ', 1),
+('XYX', 2),
+('XYY', 2),
+('XYZ', 2),
+('YXX', 3),
+('YXY', 3),
+('YXZ', 3);
+
+INSERT INTO B VALUES
+('ZXX'),
+('XXX'),-- A
+('ZXZ'),
+('YXZ'),-- A
+('YXY');-- A
+
+SELECT * FROM A, B;
+
+SELECT v FROM A
+UNION
+SELECT * FROM B;
+
+SELECT v FROM A
+INTERSECT
+SELECT * FROM b;
+
+SELECT v FROM A
+EXCEPT
+SELECT * FROM b;
