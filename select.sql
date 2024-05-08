@@ -251,3 +251,21 @@ SELECT * FROM products
 ORDER BY quantity
 LIMIT 3;
 
+-------------------------------
+-- Practice sorting
+
+-- 6
+SELECT *, extract("years" FROM age(birthday)) AS age FROM users
+ORDER BY extract("years" FROM age(birthday));
+
+SELECT *, extract("years" FROM age(birthday)) AS age FROM users
+ORDER BY extract("years" FROM age(birthday)) DESC;
+
+-- 7
+SELECT * FROM products
+ORDER BY price DESC;
+
+-- 8
+SELECT * FROM products
+ORDER BY price DESC
+LIMIT 5;
