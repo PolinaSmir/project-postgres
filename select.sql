@@ -379,3 +379,56 @@ FROM products AS p JOIN orders_to_products AS otp
 ON p.id = otp.product_id
 GROUP BY p.brand
 ORDER BY "quantity" DESC;
+
+-- users + amount of orders
+
+SELECT u.*, count(*) FROM
+users AS u JOIN orders AS o
+ON u.id = o.customer_id
+GROUP BY u.id
+ORDER BY u.id DESC;
+
+-- users that dont have an order
+
+-- var 1
+
+SELECT * FROM
+users AS u LEFT JOIN orders AS o
+ON u.id = o.customer_id
+WHERE o.customer_id IS NULL;
+
+-- var 2
+
+SELECT * FROM users
+WHERE id IN (
+  SELECT id FROM users
+  EXCEPT
+  SELECT customer_id FROM orders
+);
+
+INSERT INTO products (brand, model, category, price, quantity)
+VALUES ('Microsoft', '12345', 'phones', 200, 2);
+
+-- SELECT * FROM products
+-- WHERE brand = 'Microsoft';
+
+---------------------------------------
+-- Homework
+
+-- 1
+SELECT * FROM
+products AS p LEFT JOIN orders_to_products AS otp
+ON p.id = otp.product_id
+WHERE otp.product_id IS NULL;
+
+-- 2
+SELECT order_id, count(*) FROM orders_to_products
+GROUP BY order_id
+ORDER BY order_id;
+
+-- 3
+SELECT p.id, p.brand, p.model, sum(otp.quantity) AS customer_sum FROM
+products AS p JOIN orders_to_products AS otp
+ON p.id = otp.product_id
+GROUP BY p.id
+ORDER BY customer_sum DESC;
