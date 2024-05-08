@@ -216,3 +216,38 @@ WHERE extract("years" FROM age(birthday)) > 10;
 SELECT count(id) FROM products;
 
 -- 2
+SELECT avg(price) FROM products;
+
+-- 3
+SELECT brand, avg(price) FROM products
+GROUP BY brand;
+
+-- 4
+SELECT brand, count(price) FROM products
+GROUP BY brand;
+
+-- 5
+SELECT * FROM
+(
+  SELECT brand, avg(price) FROM products
+  GROUP BY brand
+) AS "A"
+WHERE "A".brand = 'Huawei';
+
+-----------  Sorting  ----------
+
+SELECT * FROM users
+ORDER BY birthday;
+
+SELECT * FROM users
+ORDER BY birthday ASC,
+      first_name ASC;
+
+UPDATE users
+SET birthday = '2001-09-14'
+WHERE id BETWEEN 2500 AND 2532;
+
+SELECT * FROM products
+ORDER BY quantity
+LIMIT 3;
+
