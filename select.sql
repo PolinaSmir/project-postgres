@@ -60,8 +60,18 @@ WHERE id = 2568;
 
 /* Homework employees */
 
--- CREATE TABLE employees(
---   id serial PRIMARY KEY,
---   name varchar(64) NOT NULL CHECK(name != ''),
---   salary int 
--- )
+CREATE TABLE employees(
+  id serial PRIMARY KEY,
+  name varchar(64) NOT NULL CHECK(name != ''),
+  salary int NOT NULL CHECK(salary >= 0),
+  work_hours int NOT NULL CHECK(work_hours >= 0)
+);
+
+INSERT INTO employees(name, salary, work_hours) VALUES
+('John', 1000, 20),
+('Marrie', 2000, 200),
+('Mark', 500, 0);
+
+UPDATE employees
+SET salary = salary*1.2
+WHERE work_hours > 150;
