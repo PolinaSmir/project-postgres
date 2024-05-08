@@ -432,3 +432,47 @@ products AS p JOIN orders_to_products AS otp
 ON p.id = otp.product_id
 GROUP BY p.id
 ORDER BY customer_sum DESC;
+
+--1 average chek
+SELECT avg(owc.cost) FROM (
+  SELECT otp.order_id, sum(p.price * otp.quantity) AS cost FROM
+  orders_to_products AS otp JOIN products AS p
+  ON otp.product_id = p.id
+  GROUP BY otp.order_id
+) AS owc;
+
+-- sum every order
+-- SELECT otp.order_id, sum(p.price * otp.quantity) AS cost FROM
+-- orders_to_products AS otp JOIN products AS p
+-- ON otp.product_id = p.id
+-- GROUP BY otp.order_id;
+
+-- 2
+SELECT owc.* FROM (
+  SELECT otp.order_id, sum(p.price * otp.quantity) AS cost FROM
+  orders_to_products AS otp JOIN products AS p
+  ON otp.product_id = p.id
+  GROUP BY otp.order_id
+) AS owc
+WHERE owc.cost > (
+  SELECT avg(owc.cost) FROM (
+  SELECT otp.order_id, sum(p.price * otp.quantity) AS cost FROM
+  orders_to_products AS otp JOIN products AS p
+  ON otp.product_id = p.id
+  GROUP BY otp.order_id
+) AS owc
+);
+
+-- 2 var 2 WITH
+
+WITH orders_with_cost AS (
+  SELECT otp.order_id, sum(p.price * otp.quantity) AS cost FROM
+  orders_to_products AS otp JOIN products AS p
+  ON otp.product_id = p.id
+  GROUP BY otp.order_id
+)
+
+SELECT * FROM orders_with_cost
+WHERE orders_with_cost.cost > (
+  SELECT avg(orders_with_cost.cost) FROM orders_with_cost
+);
