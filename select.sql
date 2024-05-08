@@ -323,6 +323,21 @@ SELECT v FROM A
 INTERSECT
 SELECT * FROM b;
 
-SELECT v FROM A
+SELECT * FROM B
 EXCEPT
-SELECT * FROM b;
+SELECT v FROM A;
+
+INSERT INTO users (first_name, last_name, email,gender,birthday,is_subscribed)
+VALUES 
+('User 1', 'Test 1', 'email1@gmail.com', 'male', '1990-09-10', true),
+('User 2', 'Test 2', 'email2@gmail.com', 'female', '1990-09-10', true),
+('User 3', 'Test 3', 'email3@gmail.com', 'male', '1990-09-10', false);
+
+SELECT id FROM users
+INTERSECT
+SELECT customer_id FROM orders;
+
+SELECT id FROM users
+EXCEPT
+SELECT customer_id FROM orders;
+
