@@ -187,3 +187,32 @@ WHERE name = 'Oleg';
 -- 15
 DELETE FROM workers
 WHERE extract("years" FROM age(birthday)) > 30;
+
+
+---- Agregatni functions
+SELECT max(weight) FROM users;
+
+SELECT min(weight) FROM users;
+
+SELECT sum(weight) FROM users;
+
+SELECT avg(weight) FROM users;
+
+SELECT count(id) FROM users;
+
+SELECT gender, avg(weight) FROM users
+GROUP BY gender;
+
+SELECT avg(weight) FROM users
+WHERE gender = 'male';
+
+SELECT avg(weight) FROM users
+WHERE extract("years" FROM age(birthday)) > 10;
+
+-----------------------------------------------------------
+-- Homework with products
+
+-- 1
+SELECT count(id) FROM products;
+
+-- 2
