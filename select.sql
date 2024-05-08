@@ -213,7 +213,7 @@ WHERE extract("years" FROM age(birthday)) > 10;
 -- Homework with products
 
 -- 1
-SELECT count(id) FROM products;
+SELECT count(*) FROM products;
 
 -- 2
 SELECT avg(price) FROM products;
@@ -225,7 +225,6 @@ GROUP BY brand;
 -- 4
 SELECT brand, count(price) FROM products
 GROUP BY brand;
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -- 5
 SELECT * FROM
 (
