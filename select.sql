@@ -92,3 +92,8 @@ WHERE (gender = 'female' AND is_subscribed);
 SELECT id,first_name, last_name, birthday, EXTRACT("years" FROM age(birthday)) FROM users;
 
 -- SELECT id, first_name, last_name, make_interval(40, 8) FROM users;
+
+SELECT id AS "Персональный номер", first_name AS "Имя", last_name AS "Фамилия" FROM users;
+
+SELECT id, first_name, last_name, birthday, EXTRACT("years" FROM age(birthday)) AS years_old FROM users
+WHERE EXTRACT("years" FROM age(birthday)) BETWEEN 2 AND 10;
