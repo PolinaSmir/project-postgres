@@ -84,3 +84,11 @@ WHERE id = 4001;
 
 DELETE FROM users
 WHERE id = 4001;
+
+UPDATE users
+SET birthday = '2010-01-01'
+WHERE (gender = 'female' AND is_subscribed);
+
+SELECT id,first_name, last_name, birthday, EXTRACT("years" FROM age(birthday)) FROM users;
+
+-- SELECT id, first_name, last_name, make_interval(40, 8) FROM users;
