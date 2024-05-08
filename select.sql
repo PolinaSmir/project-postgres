@@ -341,3 +341,41 @@ SELECT id FROM users
 EXCEPT
 SELECT customer_id FROM orders;
 
+----------------------------------------------------
+-- Объединение множеств --
+
+
+SELECT a.v AS id, a.t AS price, b.v AS "phone.id" FROM a, b
+WHERE a.v = b.v;
+
+---
+
+SELECT a.v AS id, a.t AS price, b.v AS "phone.id"
+FROM a JOIN b
+ON a.v = b.v;
+
+SELECT * 
+FROM users JOIN orders
+ON users.id = orders.customer_id
+WHERE users.id = 2501;
+-------
+SELECT u.*, o.id AS "order_id"
+FROM users AS u JOIN orders AS o
+ON u.id = o.customer_id
+WHERE u.id = 2501;
+
+SELECT *
+FROM products AS p JOIN orders_to_products AS otp
+ON p.id = otp.product_id
+WHERE p.brand = 'Samsung';
+
+SELECT count(*)
+FROM products AS p JOIN orders_to_products AS otp
+ON p.id = otp.product_id
+WHERE p.brand = 'Samsung';
+
+SELECT brand, count(*) AS "quantity"
+FROM products AS p JOIN orders_to_products AS otp
+ON p.id = otp.product_id
+GROUP BY p.brand
+ORDER BY "quantity" DESC;
