@@ -225,7 +225,7 @@ GROUP BY brand;
 -- 4
 SELECT brand, count(price) FROM products
 GROUP BY brand;
-
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -- 5
 SELECT * FROM
 (
@@ -269,3 +269,18 @@ ORDER BY price DESC;
 SELECT * FROM products
 ORDER BY price DESC
 LIMIT 5;
+
+----------------------------------------------------------------------
+-- Frilter groups --
+
+SELECT count(*), extract("years" FROM age(birthday)) AS "age_group" FROM users
+GROUP BY "age_group";
+
+SELECT count(*), extract("years" FROM age(birthday)) AS "age_group" FROM users
+GROUP BY "age_group"
+HAVING count(*) < 500;
+
+SELECT count(*), extract("years" FROM age(birthday)) AS "age_group" FROM users
+GROUP BY "age_group"
+ORDER BY "age_group";
+
