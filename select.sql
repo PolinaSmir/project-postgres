@@ -97,3 +97,9 @@ SELECT id AS "Персональный номер", first_name AS "Имя", last
 
 SELECT id, first_name, last_name, birthday, EXTRACT("years" FROM age(birthday)) AS years_old FROM users
 WHERE EXTRACT("years" FROM age(birthday)) BETWEEN 2 AND 10;
+
+SELECT * FROM users
+LIMIT 50
+OFFSET 100;
+
+-- OFFSET = LIMIT * page_which_we_want
