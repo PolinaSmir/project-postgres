@@ -103,3 +103,16 @@ LIMIT 50
 OFFSET 100;
 
 -- OFFSET = LIMIT * page_which_we_want
+
+SELECT id, first_name || ' ' || last_name AS "full name", gender, email FROM users;
+
+SELECT id, concat(first_name, ' ', last_name) AS "full name", gender, email FROM users;
+
+SELECT id, concat(first_name, ' ', last_name) AS "full name", gender, email FROM users
+WHERE char_length(concat(first_name, ' ', last_name)) < 10;
+
+SELECT * FROM
+(
+  SELECT id, concat(first_name, ' ', last_name) AS "full name", gender, email FROM users
+) AS "FN"
+WHERE char_length("FN"."full name") < 10;
