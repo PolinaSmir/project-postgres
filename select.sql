@@ -170,7 +170,7 @@ WHERE extract("years" FROM age(birthday)) = 30 OR salary > 800;
 
 -- 11
 SELECT * FROM workers
-WHERE extract("years" FROM age(birthday)) >=25 AND extract("years" FROM age(birthday)) <= 28;
+WHERE extract("years" FROM age(birthday)) BETWEEN 25 AND 28;
 
 -- 12
 SELECT * FROM workers
