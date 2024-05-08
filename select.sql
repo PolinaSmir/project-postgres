@@ -116,3 +116,74 @@ SELECT * FROM
   SELECT id, concat(first_name, ' ', last_name) AS "full name", gender, email FROM users
 ) AS "FN"
 WHERE char_length("FN"."full name") < 10;
+
+
+-------------------
+--Practice
+
+CREATE TABLE workers(
+  id serial PRIMARY KEY,
+  name varchar(256) NOT NULL CHECK(name != ''),
+  salary int CHECK(salary >= 0),
+  birthday date
+);
+
+-- 1,2
+INSERT INTO workers(name, salary) VALUES
+('Oleg', 300),
+('Yaroslava', 500);
+
+-- 3
+INSERT INTO workers(name, salary) VALUES
+('Sasha', 1000),
+('Masha', 200);
+
+-- 4
+UPDATE workers
+SET salary = 500
+WHERE name = 'Oleg';
+
+-- 5
+UPDATE workers
+SET salary = 400
+WHERE salary > 500;
+
+-- 6
+SELECT * FROM workers
+WHERE salary > 400;
+
+-- 7
+SELECT * FROM workers
+WHERE id = 4;
+
+-- 8
+SELECT salary, extract("years" FROM age(birthday)) FROM workers
+WHERE name = 'Oleg';
+
+-- 9
+SELECT * FROM workers
+WHERE name = 'Petya';
+
+-- 10
+SELECT * FROM workers
+WHERE extract("years" FROM age(birthday)) = 30 OR salary > 800;
+
+-- 11
+SELECT * FROM workers
+WHERE extract("years" FROM age(birthday)) >=25 AND extract("years" FROM age(birthday)) <= 28;
+
+-- 12
+SELECT * FROM workers
+WHERE extract("months" FROM birthday) = 9;
+
+-- 13
+DELETE FROM workers
+WHERE id = 4;
+
+-- 14
+DELETE FROM workers
+WHERE name = 'Oleg';
+
+-- 15
+DELETE FROM workers
+WHERE extract("years" FROM age(birthday)) > 30;
