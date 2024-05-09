@@ -12,6 +12,12 @@ INSERT INTO employees (name, position) VALUES
 ('Jake', 'Bodyguard for developers'),
 ('Andrew', 'Driver');
 
+INSERT INTO employees (name, position) VALUES
+('Milena', 'CFO'),
+('sergey', 'CEO'),
+('Matthew', 'SMM/PR division'),
+('Timofey', 'Accountant');
+
 CREATE TABLE positions (
   name varchar(300) PRIMARY KEY,
   department varchar(300),
@@ -23,3 +29,13 @@ INSERT INTO positions(name, car_availability) VALUES
 ('Sales manager', false),
 ('Bodyguard for developers', true),
 ('Driver', true);
+
+INSERT INTO positions(name, car_availability) VALUES
+('CFO', true),
+('CEO', true),
+('SMM/PR division', false),
+('Accountant', false);
+
+SELECT e.id, e.name, e.position, p.car_availability FROM employees AS e
+JOIN positions AS p
+ON e.position = p.name;
