@@ -1,91 +1,55 @@
-DROP TABLE employees;
-DROP TABLE positions, departments;
-------------------
-
-CREATE TABLE employees(
+CREATE TABLE students(
   id serial PRIMARY KEY,
-  name varchar(200),
-  position varchar(200) REFERENCES positions(name)
+  name varchar(30)
 );
 
-CREATE TABLE positions (
-  name varchar(300) PRIMARY KEY,
-  department varchar(300) REFERENCES departments(name),
-  car_availability boolean
+INSERT INTO students(name) VALUES
+('Ivanov'),
+('Petrov'),
+('Sidorov');
+
+-----------------------------------
+
+CREATE TABLE teachers(
+  id serial PRIMARY KEY,
+  name varchar(30),
+  subject varchar(50) REFERENCES subjects(name)
 );
 
-CREATE TABLE departments(
-  name VARCHAR(200) PRIMARY KEY,
-  phone_number varchar(15)
+INSERT INTO teachers(name, subject) VALUES
+('Smirnoff', 'Systems of AI'),
+('Petrenko', 'Cloud computing');
+
+-----------------------------------
+
+
+-----------------------------------
+
+CREATE TABLE subjects(
+  name VARCHAR(50) PRIMARY KEY
 );
 
-------------------------------------
+INSERT INTO subjects VALUES
+('Systems of AI'),
+('Cloud computing');
 
-INSERT INTO employees (name, position) VALUES
-('Milena', 'CFO' ),
-('sergey', 'CEO'),
-('Matthew','SMM/PR division' ),
-('Timofey', 'Accountant'),
-('John', 'JS developer'),
-('Jane', 'Sales manager'),
-('Jake', 'Bodyguard for developers'),
-('Andrew', 'Driver');
+-----------------------------------
 
--- INSERT INTO departments (name, phone_number) VALUES
--- ('Top managment', '11-11-11' ),
--- ('Operational department', '22-22-22'),
--- ('Financial direction', '33-33-33'),
--- ('Developers direction', '44-44-44');
-
--- INSERT INTO positions (name, department, car_availability) VALUES
--- ('CFO', 'Top managment', true),
--- ('CEO', 'Top managment', true),
--- ('SMM/PR division', 'Operational department', false),
--- ('Accountant', 'Financial direction', false),
--- ('JS developer', 'Developers direction', false),
--- ('Sales manager', 'Operational department', false),
--- ('Bodyguard for developers', 'Operational department', true),
--- ('Driver', 'Operational department', true);
-
-ALTER TABLE employees
-DROP COLUMN department_phone;
-
-ALTER TABLE employees
-ADD FOREIGN KEY (department) REFERENCES departments(name);
-
-
-INSERT INTO positions(name, car_availability) VALUES
-('JS developer', false),
-('Sales manager', false),
-('Bodyguard for developers', true),
-('Driver', true);
-
-INSERT INTO positions(name, car_availability) VALUES
-('CFO', true),
-('CEO', true),
-('SMM/PR division', false),
-('Accountant', false);
-
-CREATE TABLE departments(
-  name VARCHAR(200) PRIMARY KEY,
-  phone_number varchar(15)
+CREATE TABLE students_to_teachers(
+  teacher_id int REFERENCES teachers(id),
+  student_id int REFERENCES students(id),
+  PRIMARY KEY (teacher_id, student_id)
 );
 
-INSERT INTO departments (name, phone_number) VALUES
-('Top managment', '11-11-11' ),
-('Operational department', '22-22-22'),
-('Financial direction', '33-33-33'),
-('Developers direction', '44-44-44');
+INSERT INTO students_to_teachers VALUES
+(1, 1),
+(1, 2),
+(2, 1);
 
+-----------------------------------
 
-SELECT e.id, e.name, e.position, p.car_availability FROM employees AS e
-JOIN positions AS p
-ON e.position = p.name;
-
----------------
-
-SELECT e.id, e.name, e.position, p.car_availability, d.phone_number AS "Department phone number" FROM employees AS e
-JOIN positions AS p
-ON p.name = e.position
-JOIN departments AS d
-ON p.department = d.name;
+SELECT s.id, s.name AS "Student's name", t.name AS "Teacher's name", t.subject FROM students AS s
+JOIN students_to_teachers AS std
+ON s.id = std.student_id
+JOIN teachers AS t
+ON std.teacher_id = t.id;
