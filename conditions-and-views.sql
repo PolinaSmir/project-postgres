@@ -37,3 +37,25 @@ users AS u LEFT JOIN orders_with_price AS owp
 ON u.id = owp.customer_id
 GROUP BY u.id
 ORDER BY "sum";
+
+-- Создание функции 
+
+CREATE FUNCTION add_numbers(number1 integer, number2 integer)
+RETURNS integer
+AS
+$$
+BEGIN
+  RETURN number1*number2;
+END;
+$$
+LANGUAGE plpgsql;
+
+-- Вызов функции
+
+SELECT add_numbers('5', 15);
+
+-- Удаление функции
+
+DROP FUNCTION add_numbers;
+
+DROP FUNCTION add_numbers(integer, integer);-- Правильный вызов функции
