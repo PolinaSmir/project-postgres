@@ -1,29 +1,27 @@
-CREATE MATERIALIZED VIEW total_orders AS (
-  SELECT count(*) AS "общее кол-во заказов" FROM orders
-);
+SELECT * FROM orders
+WHERE status = true;
 
-DROP MATERIALIZED VIEW total_orders;
+INSERT INTO orders(customer_id, status) VALUES
+(3994, 'new');
 
-SELECT * FROM total_orders; --8072
+CREATE TYPE order_status AS ENUM('new', 'processing', 'shiped', 'done', 'canceled');
 
-INSERT INTO orders (customer_id, status)
-VALUES (
-    2732,
-    false
-  );
+ALTER TABLE orders
+ALTER COLUMN status
+TYPE order_status
+USING (
+  CASE status
+  WHEN false THEN 'processing'
+  WHEN true THEN 'done'
+  ELSE 'new'
+  END
+)::order_status;
 
-REFRESH MATERIALIZED VIEW total_orders;
+DROP VIEW users_with_orders_amount, orders_with_price;
 
-CREATE FUNCTION refresh_materialized_view()
-RETURNS void
-AS
-$$
-BEGIN
-  REFRESH MATERIALIZED VIEW total_orders;
-END
-$$
-LANGUAGE plpgsql;
+SELECT * FROM orders
+ORDER BY created_at DESC;
 
-DROP FUNCTION refresh_materialized_view();
-
-SELECT refresh_materialized_view();
+UPDATE orders
+SET status = 'done'
+WHERE id = 14083;
